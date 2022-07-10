@@ -37,25 +37,25 @@ def windowz(data, size):
         start += int(size / 2)
 
 def segment_opp(x_train,y_train,window_size):
-	segments = np.zeros(((len(x_train)//(window_size//2))-1,window_size,77))
-	labels = np.zeros(((len(y_train)//(window_size//2))-1))
-	i_segment = 0
-	i_label = 0
-	for (start,end) in windowz(x_train,window_size):
-		if(len(x_train[start:end]) == window_size):
-			m = stats.mode(y_train[start:end])
-			segments[i_segment] = x_train[start:end]
-			labels[i_label] = m[0]
-			i_label+=1
-			i_segment+=1
-			# print "x_start_end",x_train[start:end]
-			# segs =  x_train[start:end]
-			# segments = np.concatenate((segments,segs))
-			# segments = np.vstack((segments,x_train[start:end]))
-			# segments = np.vstack([segments,segs])
-			# segments = np.vstack([segments,x_train[start:end]])
-			# labels = np.append(labels,stats.mode(y_train[start:end]))
-	return segments, labels
+    segments = np.zeros(((len(x_train)//(window_size//2))-1,window_size,77))
+    labels = np.zeros(((len(y_train)//(window_size//2))-1))
+    i_segment = 0
+    i_label = 0
+    for (start,end) in windowz(x_train,window_size):
+        if(len(x_train[start:end]) == window_size):
+            m = stats.mode(y_train[start:end])
+            segments[i_segment] = x_train[start:end]
+            labels[i_label] = m[0]
+            i_label+=1
+            i_segment+=1
+            # print "x_start_end",x_train[start:end]
+            # segs =  x_train[start:end]
+            # segments = np.concatenate((segments,segs))
+            # segments = np.vstack((segments,x_train[start:end]))
+            # segments = np.vstack([segments,segs])
+            # segments = np.vstack([segments,x_train[start:end]])
+            # labels = np.append(labels,stats.mode(y_train[start:end]))
+    return segments, labels
 def segment_dap(x_train,y_train,window_size):
     segments = np.zeros(((len(x_train)//(window_size//2))-1,window_size,9))
     labels = np.zeros(((len(y_train)//(window_size//2))-1))
@@ -136,24 +136,25 @@ start_time = time.time()
 # for activity in np.unique(dataset["activity"]):
 #     subset = dataset[dataset["activity"] == activity][:180]
 #     plot_activity(activity,subset)
-if len(sys.argv)<2:
-    print( "Correct use:python script.py <valid_dataset>")
-    sys.exit()
+#if len(sys.argv)<2:
+#    print( "Correct use:python script.py <valid_dataset>")
+#    sys.exit()
 
-
-dataset = sys.argv[1]
+dataset = "pa2"
+#dataset = sys.argv[1]
 if dataset == "opp":
     path = os.path.join(os.path.expanduser('~'), 'Downloads', 'OpportunityUCIDataset', 'opportunity.h5')
 elif dataset =="dap":
     path = os.path.join(os.path.expanduser('~'), 'Documents', 'pythonProject','baseline-cnn-daphnet', 'daphnet.h5')
 elif dataset =="pa2":
-    path = os.path.join(os.path.expanduser('~'), 'Downloads', 'PAMAP2_Dataset', 'pamap2.h5')
+    path = os.path.join(os.getcwd(), "PAMAP2_Dataset", "pamap2.h5")
+    #path = os.path.join(os.path.expanduser('~'), 'Downloads', 'PAMAP2_Dataset', 'pamap2.h5')
 elif dataset =="sph":
     path = os.path.join(os.path.expanduser('~'), 'Downloads', 'SphereDataset', 'sphere.h5')
 else:
     print( "Dataset not supported yet")
     sys.exit()
-
+print("PATH: ", path)
 f = h5py.File(path, 'r')
 
 
@@ -298,7 +299,7 @@ dropout_2 = tf.placeholder(tf.float32) #0.25
 dropout_3 = tf.placeholder(tf.float32) #0.5
 
 learning_rate = 0.0005
-training_epochs = 50
+training_epochs = 200
 
 total_batches = train_x.shape[0] // batch_size
 

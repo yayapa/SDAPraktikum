@@ -381,7 +381,7 @@ class Model:
     def run_model(self, training_epochs=50):
 
         # DEFINING THE MODEL
-        learning_rate = 0.0005
+        learning_rate = 0.0001
         batch_size = 64
         total_batches = self.dataset_obj.train_x.shape[0] // batch_size
 
@@ -453,7 +453,7 @@ class Model:
         # DEFINING THE MODEL
 
 
-        learning_rate = 0.0005
+        learning_rate = 0.0001
         #training_epochs = 2
         batch_size = 64
         total_batches = self.dataset_obj.train_x.shape[0] // batch_size

@@ -1,4 +1,8 @@
-
+"""
+This is a flask app - connection between frontend and backend.
+Start this on the server.
+Start from SDAPraktikum folder i.e. above /E2/ directory.
+"""
 import os.path
 import sys
 import json
@@ -150,6 +154,13 @@ def download_query():
 
 @app.route('/downloadpic/<filename>')
 def download_pic(filename):
+    filename_path = os.path.join(DOWNLOAD_DIR, filename)
+    return send_file(filename_path, mimetype='image/jpg')
+
+@app.route('/downloadpic/<filename>')
+def download(filename):
+    #filename = os.path.join(ROOT_DIR + "E2/styletransfer/outputs", filename)
+    #filename_path = "/home/uwgdz/tmp/SDAPraktikum/E2/styletransfer/outputs/" + filename
     filename_path = os.path.join(DOWNLOAD_DIR, filename)
     return send_file(filename_path, mimetype='image/jpg')
 

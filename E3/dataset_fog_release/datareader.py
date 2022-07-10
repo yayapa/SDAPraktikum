@@ -244,6 +244,7 @@ class data_reader:
         labels = []
         for i, filename in enumerate(filelist):
             print('Reading file %d of %d' % (i+1, len(filelist)))
+            print(os.getcwd())
             with open('./dataset/%s' % filename, 'r') as f:
                 reader = csv.reader(f, delimiter=' ')
                 for line in reader:
@@ -570,5 +571,7 @@ def load_targets(path):
     return targets
 
 if __name__ == "__main__":
-    print('Reading %s ' % (sys.argv[1]))
-    dr = data_reader(sys.argv[1])
+    arg = "dap"
+    #print('Reading %s ' % (sys.argv[1]))
+    dr = data_reader(arg)
+    #dr = data_reader(sys.argv[1])
