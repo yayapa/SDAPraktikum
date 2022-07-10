@@ -1,3 +1,8 @@
+"""
+This file is based on original code from https://github.com/Koutoulakis/Deep-Learning-for-Human-Activity-Recognition
+The parts of code are separated in class and methods to perform the experiments.
+All prints, comments and commented lines are saves as in original.
+"""
 import random
 
 import pandas as pd
@@ -94,10 +99,17 @@ def segment_sph(x_train,y_train,window_size):
 
 
 class Dataset:
+    """
+    Class to create, read and preprocess dataset
+    """
     def __init__(self, dataset):
         self.dataset = dataset
 
     def read_dataset(self):
+        """
+        Read dataset
+        :return: train and test data
+        """
         if self.dataset == "opp":
             path = os.path.join(os.getcwd(), "OpportunityUCIDataset", "opportunity.h5")
         elif self.dataset =="dap":
@@ -129,6 +141,10 @@ class Dataset:
 
 
     def downsample_dataset(self):
+        """
+        Downsample original dataset
+        :return: downsampled dataset
+        """
 
         if self.dataset == "dap":
             # downsample to 30 Hz
@@ -160,6 +176,10 @@ class Dataset:
 
 
     def segment_dataset(self):
+        """
+        Segment dataset
+        :return: segmented dataset
+        """
         if self.dataset == "opp":
             self.input_width = 23
             print( "segmenting signal...")
@@ -197,6 +217,9 @@ class Dataset:
         return self.train_x, self.train_y, self.test_x, self.test_y
 
     def get_final(self):
+        """
+        Get final preparations for training
+        """
         train = pd.get_dummies(self.train_y)
         test = pd.get_dummies(self.test_y)
 
@@ -213,17 +236,36 @@ class Dataset:
         print( "train_y shape(1-hot) =",self.train_y.shape)
         print( "test_y shape(1-hot) =",self.test_y.shape)
 
+
 class Model:
+    """
+    Model for training with tensorflow
+    """
     def __init__(self, dataset_obj):
         self.dataset_obj = dataset_obj
+
     def build_model(self, load_weights=False, self_training=False, num_transforms=2):
+        """
+        Builds and initialize new CNN model
+        :param load_weights: whether weights are loaded or initialized randomly
+        :param self_training: whether the self-training is considered by initialization
+        :param num_transforms: number of transforms for self-training (identity is also counted)
+        """
         self.load_weights = load_weights
         self.self_training = self_training
         self.num_transforms = num_transforms
         self.get_model_params()
         self.get_model()
         self.get_data_preparation()
+
+
     def weight_variable(self, shape, name):
+        """
+        Create a weight matrix
+        :param shape: shape of the weight matrix
+        :param name: name of weight matrix
+        :return: tensorflow variable
+        """
         if name == "W_conv2" and self.load_weights:
             initial = tf.constant(self.W_conv2_weight)
             print("WEIGHTS ARE LOADED")
@@ -232,6 +274,12 @@ class Model:
         return tf.Variable(initial, name=name)
 
     def bias_variable(self, shape, name):
+        """
+        Create a bias
+        :param shape: shape of the weight matrix
+        :param name: name of weight matrix
+        :return: tensorflow variable
+        """
         if name == "b_conv2" and self.load_weights:
             initial = tf.constant(self.b_conv2_weight)
             print("WEIGHTS ARE LOADED")
@@ -240,12 +288,29 @@ class Model:
         return tf.Variable(initial, name=name)
 
     def depth_conv2d(self, x, W):
+        """
+        Create a Convolutional Layer
+        :param x: input
+        :param W: weight matrix
+        :return: Conv Layer
+        """
         return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='VALID')
 
     def max_pool(self, x, kernel_size, stride_size):
+        """
+        Create a Max Pool Layer
+        :param x: input
+        :param kernel_size: kernel size
+        :param stride_size: stride size
+        :return: Max Pool Layer
+        """
         return tf.nn.max_pool(x, ksize=[1, 1, kernel_size, 1],
                               strides=[1, 1, stride_size, 1], padding='VALID')
+
     def get_model_params(self):
+        """
+        Defines model parameter for initialization depending on dataset or mode (self-train or not)
+        """
         if self.dataset_obj.dataset=="opp":
             print( "opp")
             self.input_height = 1
@@ -264,7 +329,7 @@ class Model:
             self.input_width = self.dataset_obj.input_width #or 90 for actitracker
             self.num_labels = 11  #or 6 for actitracker
             self.num_channels = 52 #or 3 for actitracker
-        elif dataset_obj.dataset =="sph":
+        elif self.dataset_obj.dataset =="sph":
             print( "sph")
             self.input_height = 1
             self.input_width = self.dataset_obj.input_width #or 90 for actitracker
@@ -276,6 +341,9 @@ class Model:
             self.num_labels = self.num_transforms
 
     def get_model(self):
+        """
+        Initialize model
+        """
         stride_size = 2
         kernel_size_1 = 7
         kernel_size_2 = 3
@@ -352,6 +420,9 @@ class Model:
         self.y_conv = tf.matmul(h_fc1,self.W_fc2) + self.b_fc2
 
     def get_data_preparation(self):
+        """
+        Prepare data for execution in the model
+        """
         train = pd.get_dummies(self.dataset_obj.train_y)
         test = pd.get_dummies(self.dataset_obj.test_y)
 
@@ -378,10 +449,13 @@ class Model:
         correct_prediction = tf.equal(tf.argmax(self.y_conv,1), tf.argmax(self.Y,1))
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-    def run_model(self, training_epochs=50):
-
-        # DEFINING THE MODEL
-        learning_rate = 0.0001
+    def run_model(self, training_epochs=50, learning_rate=0.0001):
+        """
+        Train the model
+        :param training_epochs: number of training epochs
+        :param learning_rate: learning rate
+        :return:
+        """
         batch_size = 64
         total_batches = self.dataset_obj.train_x.shape[0] // batch_size
 
@@ -418,6 +492,9 @@ class Model:
             saver.save(session, self.dataset_obj.dataset)
 
     def save_weights(self):
+        """
+        Save weights after train
+        """
         self.W_conv2_weight = self.W_conv1.eval()
         self.b_conv2_weight = self.b_conv1.eval()
         self.W_conv2_weight = self.W_conv2.eval()
@@ -425,8 +502,10 @@ class Model:
         self.W_fc1_weight = self.W_fc1.eval()
         self.b_fc1_weight = self.b_fc1.eval()
 
-
     def test(self):
+        """
+        :return: training statistics
+        """
         saver = tf.train.Saver()
         with tf.Session() as session:
             saver.restore(session, self.dataset_obj.dataset)
@@ -446,15 +525,14 @@ class Model:
             y_true = np.argmax(self.test_y, 1)
             return test_accuracy, val_accuracy, y_pred, y_true
 
-
-
-    def self_train(self, transforms, training_epochs=50):
-
-        # DEFINING THE MODEL
-
-
-        learning_rate = 0.0001
-        #training_epochs = 2
+    def self_train(self, transforms, training_epochs=50, learning_rate=0.0005):
+        """
+        Self-train the model to differ the transforms
+        :param transforms: which transforms are applied for self-training
+        :param training_epochs: number of training epochs
+        :param learning_rate: learning rate
+        :return:
+        """
         batch_size = 64
         total_batches = self.dataset_obj.train_x.shape[0] // batch_size
 
@@ -481,8 +559,8 @@ class Model:
                     to_transform = np.swapaxes(to_transform, 0, 1)
                     to_transform = np.reshape(to_transform, (1, to_transform.shape[0], to_transform.shape[1]))
                     self.train_x[i] = to_transform
-                    if np.all(to_transform == before_transform):
-                        print("SELF-TRANSFORM")
+                    #if np.all(to_transform == before_transform):
+                    #    print("SELF-TRANSFORM")
             self.train_y = indexes
 
             for epoch in range(training_epochs):
@@ -501,7 +579,14 @@ class Model:
             self.save_weights()
             saver.save(session, self.dataset_obj.dataset)
 
+
 def get_random_spilt_one_hot(num_samples, num_classes):
+    """
+    Get the uniformly distributed classes encoded in one-hot
+    :param num_samples: number of samples in dataset
+    :param num_classes: number of classes
+    :return: list of uniformly distributed classes encoded in one-hot
+    """
     split = int(num_samples / num_classes)
     indexes = []
     for i in range(num_classes):
@@ -511,10 +596,23 @@ def get_random_spilt_one_hot(num_samples, num_classes):
     random.shuffle(indexes)
     return np.array(indexes)
 
+
 def get_one_hot(i, num_classes):
+    """
+    Get one hot encoding
+    :param i: which class
+    :param num_classes: overall number of classes
+    :return: one-hot encoding
+    """
     one_hot = [0 for j in range(num_classes)]
     one_hot[i] = 1
     return np.array(one_hot)
 
+
 def get_class_from_one_hot(one_hot):
+    """
+    Get the class from one-hot encoding
+    :param one_hot: input, one-hot encoded
+    :return: int, the class
+    """
     return np.where(one_hot == 1)[0][0]
