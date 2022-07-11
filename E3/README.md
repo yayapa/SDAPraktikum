@@ -28,9 +28,7 @@ Files Description:
 4) student.py: train a student model
 
 How to run?
-1) Download datasets and store them in the corresponding folder
-   a. Opportunity dataset (it can be downloaded from: https://archive.ics.uci.edu/ml/datasets/opportunity+activity+recognition)
-   b. Daphnet Gait dataset (it can be downloaded from: https://archive.ics.uci.edu/ml/datasets/Daphnet+Freezing+of+Gait)
+1) Download Opportunity dataset (it can be downloaded from: https://archive.ics.uci.edu/ml/datasets/opportunity+activity+recognition) and Daphnet Gait dataset (it can be downloaded from: https://archive.ics.uci.edu/ml/datasets/Daphnet+Freezing+of+Gait) and put them in the corresponding folder
 2) Run python datareader.py opp to get opportunity.h5; run python datareader.py dap to get daphnet.h5
 3) Run python teacher.py opp using opportunity.h5 and then store all the information in the file model.
 4) Run python student.py dap using daphnet.h5
