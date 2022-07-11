@@ -13,6 +13,7 @@ Two different approaches are tested in jupyter notebook ***SelfTraining.ipynb***
 2. Multi-class Classification, which transformation is applied
 
 ## Teacher and Student Model
+Based on [TANG21]: https://dl.acm.org/doi/10.1145/3448112
 The basic idea is transfer learning (TL): take full advantage of old knowledge rather than train a new model from zero when getting a new similar task
 
 The process is as follows:
