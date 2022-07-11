@@ -1,6 +1,6 @@
 # Pre-training Approaches
-
-## Pretraining on another task
+The datasets should be placed in the same folder as ***Pretraining.ipynb***.
+## Pretraining on another task 
 Based on [Huh16](https://arxiv.org/abs/1608.08614).
 Use jupyter notebook ***Pretraining.ipynb*** to test the approach: 
 the network 1 is trained on one dataset and the network 2 is initialized with the weights of network 1 and is trained from scratch.
