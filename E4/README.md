@@ -1,5 +1,6 @@
 # Causal Relation
-
+BEFORE YOU START:
+download und unpack the embedding into CNN/embedding/ from [here](http://metaoptimize.s3.amazonaws.com/hlbl-embeddings-ACL2010/hlbl-embeddings-scaled.EMBEDDING_SIZE=50.txt.gz)
 ## Converter
 First convert the original datasets into the [CREST](https://github.com/phosseini/CREST) format.
 Then, convert it into [CNN](https://github.com/onehaitao/CNN-relation-extraction) format to use it with dataloader and word embedding.
