@@ -21,6 +21,7 @@ dependencies:
   - gmp=6.2.1=h58526e2_0
   - gnutls=3.6.13=h85f3911_1
   - idna=3.3=pyhd8ed1ab_0
+  - imbalanced-learn=0.9.1=pyhd8ed1ab_1
   - intel-openmp=2022.0.1=h06a4308_3633
   - jinja2=3.1.2=pyhd8ed1ab_1
   - joblib=1.1.0=pyhd8ed1ab_0

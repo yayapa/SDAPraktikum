@@ -14,9 +14,12 @@ import numpy as np
 class Config(object):
     def __init__(self):
         # get init config
-        args = self.__get_config()
-        for key in args.__dict__:
-            setattr(self, key, args.__dict__[key])
+        #args = self.__get_config()
+        #for key in args.__dict__:
+        #    setattr(self, key, args.__dict__[key])
+
+        # get default config
+        self.__get_default_config()
 
         # select device
         self.device = None
@@ -33,10 +36,31 @@ class Config(object):
             os.makedirs(self.model_dir)
 
         # backup data
-        self.__config_backup(args)
+        #self.__config_backup(args)
 
         # set the random seed
         self.__set_seed(self.seed)
+
+    def __get_default_config(self):
+        self.data_dir = "./data"  # load data dir
+        self.output_dir = "./output"  # dir to save output
+        self.embedding_path = "./embedding/hlbl-embeddings-scaled.EMBEDDING_SIZE=50.txt"  # pretrained word embedding
+        self.word_dim = 50  # dimension of word embedding
+        self.model_name = None
+        self.mode = 1  # running mode: 1 for training; otherwise testing
+        self.seed = 5782  # random seed
+        self.cuda = -1  # num of gpu device, if -1, select cpu
+        self.epochs = 20  # max epoches during training
+        self.dropout = 0.5  # the possiblity of dropout
+        self.batch_size = 128
+        self.lr = 0.001
+        self.max_len = 100  # max length of sentence
+        self.pos_dis = 50  # max distance of position embedding
+        self.pos_dim = 5  # dimension of position embedding
+        self.hidden_size = 100  # the size of linear layer between convolution and classification
+        self.filter_num = 200  # the number of filters in convolution
+        self.window = 3  # the size of window in convolution
+        self.L2_decay = 1e-5
 
     def __get_config(self):
         parser = argparse.ArgumentParser()
