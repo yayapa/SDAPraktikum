@@ -12,7 +12,7 @@ Baseline uses the data loader from [CNN](https://github.com/onehaitao/CNN-relati
 The baseline can be found in ***baseline.py***
 
 TODO: make appropriate metrics, Grid Search?, Cross Validation?
-TODO: get rid of args in the class Config to use it on jupyter notebook
+TODO: get rid of args in the class Config to use it on jupyter notebook (Done!)
 
 ## CNN
 CNN model is based on this [repository](https://github.com/onehaitao/CNN-relation-extraction)
