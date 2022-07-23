@@ -2,7 +2,6 @@
 # -*- encoding: utf-8 -*-
 # @Version : Python 3.6
 
-
 import argparse
 import torch
 import os
@@ -14,12 +13,8 @@ import numpy as np
 class Config(object):
     def __init__(self):
         # get init config
-        #args = self.__get_config()
-        #for key in args.__dict__:
-        #    setattr(self, key, args.__dict__[key])
+        self.__get_default_config()
 
-        # get default config
-        self.__get_config()
 
         # select device
         self.device = None
@@ -36,7 +31,6 @@ class Config(object):
             os.makedirs(self.model_dir)
 
         # backup data
-        #self.__config_backup(args)
 
         # set the random seed
         self.__set_seed(self.seed)
