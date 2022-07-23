@@ -19,7 +19,7 @@ class Config(object):
         #    setattr(self, key, args.__dict__[key])
 
         # get default config
-        self.__get_default_config()
+        self.__get_config()
 
         # select device
         self.device = None
@@ -50,7 +50,7 @@ class Config(object):
         self.mode = 1  # running mode: 1 for training; otherwise testing
         self.seed = 5782  # random seed
         self.cuda = -1  # num of gpu device, if -1, select cpu
-        self.epochs = 20  # max epoches during training
+        self.epoch = 20  # max epoches during training
         self.dropout = 0.5  # the possiblity of dropout
         self.batch_size = 128
         self.lr = 0.001
