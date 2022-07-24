@@ -26,5 +26,10 @@ They are implemented in ***custom_statistics.py***
 
 
 ## CNN
-CNN model is based on the [paper](https://aclanthology.org/C14-1220.pdf) and this [repository](https://github.com/onehaitao/CNN-relation-extraction)
-This can be found in CNN module and started with ***CNN.ipynb***
+Many approaches are investigated using these sources:
+1. [GitHub survey](https://github.com/zhijing-jin/Causality4NLP_Papers?ysclid=l5p9lwwc4n1073062)
+2. [Yang et al.](https://github.com/zhijing-jin/Causality4NLP_Papers?ysclid=l5p9lwwc4n1073062)
+3. [Paperswithcode](https://paperswithcode.com/task/relation-extraction)
+
+The CNN approach is selected. This is based on the [paper](https://aclanthology.org/C14-1220.pdf) and the [repository](https://github.com/onehaitao/CNN-relation-extraction)
+The implementation can be found in CNN module and the training started with ***CNN.ipynb***
