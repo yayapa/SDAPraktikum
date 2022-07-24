@@ -15,11 +15,11 @@ class Statistics:
         self.all_y_true.append(y_true)
         self.all_y_pred.append(y_pred)
 
-    def get_metrics(self, prediction, y_test, show=False):
+    def get_metrics(self, prediction, y_test, show=False, avg='weighted'):
         acc = accuracy_score(y_test, prediction)
-        precision = precision_score(y_test, prediction, average='weighted')
-        recall = recall_score(y_test, prediction, average='weighted')
-        f1 = f1_score(y_test, prediction, average='weighted')
+        precision = precision_score(y_test, prediction, average=avg)
+        recall = recall_score(y_test, prediction, average=avg)
+        f1 = f1_score(y_test, prediction, average=avg)
         matthew = matthews_corrcoef(y_test, prediction)
         gmean = geometric_mean_score(y_test, prediction)
         if show:
@@ -34,10 +34,10 @@ class Statistics:
     def get_mean_std(self, a):
         return np.mean(a), np.std(a)
 
-    def show(self):
+    def show(self, avg='weighted'):
         all_acc, all_precision, all_recall, all_f1, all_matthew, all_gmean = [], [], [], [], [], []
         for y_pred, y_true in zip(self.all_y_pred, self.all_y_true):
-            acc, precision, recall, f1, matthew, gmean = self.get_metrics(y_pred, y_true)
+            acc, precision, recall, f1, matthew, gmean = self.get_metrics(y_pred, y_true, False, avg)
             all_acc.append(acc)
             all_precision.append(precision)
             all_recall.append(recall)
