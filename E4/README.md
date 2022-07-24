@@ -2,14 +2,13 @@
 BEFORE YOU START:
 download und unpack the embedding into CNN/embedding/ from [here](http://metaoptimize.s3.amazonaws.com/hlbl-embeddings-ACL2010/hlbl-embeddings-scaled.EMBEDDING_SIZE=50.txt.gz)
 ## Converter
-First convert the original datasets into the [CREST](https://github.com/phosseini/CREST) format.
-Then, convert it into [CNN](https://github.com/onehaitao/CNN-relation-extraction) format to use it with dataloader and word embedding.
-The converter can be found in ***converter2cnn.ipynb***
+First, original datasets were converted into the [CREST](https://github.com/phosseini/CREST) format and saved in ***CNN/data/data_xlsx***
+Then, into [CNN](https://github.com/onehaitao/CNN-relation-extraction) format to use it with dataloader and word embedding.
+The converter can be found in ***converter2cnn.ipynb*** and already converted datasets are saved in ***CNN/data/simeval2007*** and ***CNN/data/simeval2010***
 
-TODO: Check the converter
 ## Baseline
-Baseline uses the data loader from [CNN](https://github.com/onehaitao/CNN-relation-extraction) to get word embedding.
-The baseline can be found in ***baseline.py***
+Baseline uses the dataloader from [CNN](https://github.com/onehaitao/CNN-relation-extraction) to get word embedding.
+The baseline can be found in ***Baseline.ipynb***
 
 Cross-validation can improve the performance of baseline, but can not provide an effective improvement for the CNN model.
 Hence, we come to a conclusion that cross-validation is only useful under the following situations:
@@ -17,11 +16,15 @@ Hence, we come to a conclusion that cross-validation is only useful under the fo
 2. The dataset is too small.
 3. The distribution of data is un-uniform.
 
-TODO: make appropriate metrics, Grid Search?, Cross Validation?
-TODO: get rid of args in the class Config to use it on jupyter notebook (Done!)
+## Metrics
+Based on the [survey](https://link.springer.com/content/pdf/10.1007/s10115-022-01665-w.pdf), the following metrics are chosen:
+1. Accuracy
+2. Precision, Recall, F1-score
+3. MCC and G-Mean
+
+They are implemented in ***custom_statistics.py***
+
 
 ## CNN
-CNN model is based on this [repository](https://github.com/onehaitao/CNN-relation-extraction)
-
-TODO: Test on other datasets in colab
-TODO: Should we use original 19 labels or just 3 for causal relation?
+CNN model is based on the [paper](https://aclanthology.org/C14-1220.pdf) and this [repository](https://github.com/onehaitao/CNN-relation-extraction)
+This can be found in CNN module and started with ***CNN.ipynb***
