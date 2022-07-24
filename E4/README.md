@@ -33,3 +33,6 @@ Many approaches are investigated using these sources:
 
 The CNN approach is selected. This is based on the [paper](https://aclanthology.org/C14-1220.pdf) and the [repository](https://github.com/onehaitao/CNN-relation-extraction)
 The implementation can be found in CNN module and the training started with ***CNN.ipynb***
+
+## Results
+Results are available in the presentation ***PSDA_ÜB4.pdf***
