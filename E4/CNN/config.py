@@ -33,7 +33,7 @@ class Config(object):
         # backup data
 
         # set the random seed
-        self.__set_seed(self.seed)
+        self.set_seed(self.seed)
 
     def __get_default_config(self):
         self.data_dir = "./data"  # load data dir
@@ -127,7 +127,7 @@ class Config(object):
         args = parser.parse_args()
         return args
 
-    def __set_seed(self, seed=1234):
+    def set_seed(self, seed=1234):
         os.environ['PYTHONHASHSEED'] = '{}'.format(seed)
         random.seed(seed)
         np.random.seed(seed)

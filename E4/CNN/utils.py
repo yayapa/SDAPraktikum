@@ -180,13 +180,13 @@ class SemEvalDataLoader(object):
         return loader
 
     def get_train(self):
-        return self.__get_data('simeval2010/train.json', shuffle=True)
+        return self.__get_data('train.json', shuffle=True)
 
     def get_dev(self):
-        return self.__get_data('simeval2010/test.json', shuffle=False)
+        return self.__get_data('test.json', shuffle=False)
 
     def get_test(self):
-        return self.__get_data('simeval2010/test.json', shuffle=False)
+        return self.__get_data('test.json', shuffle=False)
 
 
 if __name__ == '__main__':
